@@ -72,28 +72,31 @@ public class ConfigScreenProvider {
             wTabPanel.add(optionList, b -> b.title(ComponentProvider.translatable("text.firstperson.tab.settings"))
                     .icon(new ItemIcon(Items.COMPARATOR)));
 
-            WGridPanel itemTab = createItemTab(s -> FirstPersonModelCore.instance.getConfig().autoVanillaHands.contains(getStringItem(s)), (b, s) -> {
-                if (b) {
-                    FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(getStringItem(s));
-                } else {
-                    FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(getStringItem(s));
-                }
-                FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
-                save();
-            });
+            WGridPanel itemTab = createItemTab(
+                    s -> FirstPersonModelCore.instance.getConfig().autoVanillaHands.contains(getStringItem(s)),
+                    (b, s) -> {
+                        if (b) {
+                            FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(getStringItem(s));
+                        } else {
+                            FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(getStringItem(s));
+                        }
+                        FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
+                        save();
+                    });
             wTabPanel.add(itemTab, b -> b.title(ComponentProvider.translatable("text.firstperson.tab.autovanillahands"))
                     .icon(new ItemIcon(Items.FILLED_MAP)));
 
-            WGridPanel disableTab = createItemTab(s -> FirstPersonModelCore.instance.getConfig().autoToggleModItems
-                    .contains(getStringItem(s)), (b, s) ->{
-                if (b) {
-                    FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(getStringItem(s));
-                } else {
-                    FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(getStringItem(s));
-                }
-                FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
-                save();
-            });
+            WGridPanel disableTab = createItemTab(
+                    s -> FirstPersonModelCore.instance.getConfig().autoToggleModItems.contains(getStringItem(s)),
+                    (b, s) -> {
+                        if (b) {
+                            FirstPersonModelCore.instance.getConfig().autoToggleModItems.add(getStringItem(s));
+                        } else {
+                            FirstPersonModelCore.instance.getConfig().autoToggleModItems.remove(getStringItem(s));
+                        }
+                        FirstPersonModelCore.instance.getLogicHandler().reloadAutoVanillaHandsSettings();
+                        save();
+                    });
             wTabPanel.add(disableTab, b -> b.title(ComponentProvider.translatable("text.firstperson.tab.disableitems"))
                     .icon(new ItemIcon(Items.BARRIER)));
 
@@ -101,7 +104,8 @@ public class ConfigScreenProvider {
             PlayerRendererAccess access = null;
             //? if >= 1.21.6 {
 
-            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(new AvatarRenderState());
+            access = (PlayerRendererAccess) Minecraft.getInstance().getEntityRenderDispatcher()
+                    .getRenderer(new AvatarRenderState());
             //? } else {
             /*
             if (Minecraft.getInstance().player != null) {
@@ -147,7 +151,7 @@ public class ConfigScreenProvider {
             WButton doneButton = new WButton(CommonComponents.GUI_DONE);
             doneButton.setOnClick(() -> {
                 save();
-                Minecraft.getInstance().setScreen(previous);
+                GeneralUtil.setScreen(previous);
             });
             root.add(doneButton, 0, 27, 6, 2);
 
@@ -167,7 +171,6 @@ public class ConfigScreenProvider {
         private static @NotNull String getStringItem(Entry<ResourceKey<Item>, Item> a) {
             return a.getKey()/*? >= 1.21.11 {*/.identifier() /*?} else {*//* .location() *//*?}*/.toString();
         }
-
 
         @Override
         public void reset() {

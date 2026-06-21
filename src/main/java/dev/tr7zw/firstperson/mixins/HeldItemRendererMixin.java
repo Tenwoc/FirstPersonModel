@@ -42,8 +42,14 @@ public abstract class HeldItemRendererMixin {
             float equipProgress, float swingProgress, HumanoidArm arm);
     *///? }
 
+    //? if >= 26.2 {
+
+    @Inject(at = @At("HEAD"), method = "submitArmWithItem", cancellable = true)
+    //? } else {
+    /*
     @Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
-    //? if >= 1.21.9 {
+     *///? }
+        //? if >= 1.21.9 {
     public void renderFirstPersonItem(AbstractClientPlayer player, float deltaTick, float pitch, InteractionHand hand,
             float swingProgress, ItemStack item, float equipProgress, PoseStack matrices,
             SubmitNodeCollector vertexConsumers, int light, CallbackInfo info) {

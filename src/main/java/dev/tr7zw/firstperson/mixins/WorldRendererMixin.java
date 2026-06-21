@@ -27,7 +27,13 @@ import java.util.*;
  * Detects when the player is rendered and triggers the correct changes
  *
  */
+//? if >= 26.2 {
+
+@Mixin(net.minecraft.client.renderer.extract.LevelExtractor.class)
+//? } else {
+/*
 @Mixin(LevelRenderer.class)
+*///? }
 public abstract class WorldRendererMixin {
 
     //? if >= 1.21.9 {
@@ -39,8 +45,11 @@ public abstract class WorldRendererMixin {
             PoseStack matrices, MultiBufferSource vertexConsumers);
     *///? }
 
+    //? if < 1.21.9 {
+    /*
     @Shadow
     private RenderBuffers renderBuffers;
+     *///? }
 
     //? if <= 1.20.4 {
     /*
@@ -77,7 +86,10 @@ public abstract class WorldRendererMixin {
             return;
         }
         Vec3 vec3d = /*? if >=1.21.11 {*/ camera.position() /*?} else {*//*camera.getPosition()*//*?}*/;
+        //? if < 1.21.9 {
+        /*
         MultiBufferSource.BufferSource immediate = renderBuffers.bufferSource();
+         *///? }
         FirstPersonModelCore.instance.setRenderingPlayer(true);
         FirstPersonModelCore.instance.setRenderingPlayerPost(true);
         // Store position and apply offset
