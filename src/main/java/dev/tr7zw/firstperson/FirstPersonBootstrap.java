@@ -43,6 +43,9 @@ import net.neoforged.fml.common.Mod;
          if (FMLEnvironment.getDist() == Dist.CLIENT) {
              //? }
              dev.tr7zw.transition.loader.ModLoaderEventUtil.registerClientSetupListener(() -> new FirstPersonModelMod().sharedSetup());
+             //? if >= 26.1 {
+             KeybindHolder.INSTANCE.registerKeybinds();
+             //? }
          }
      }
 }

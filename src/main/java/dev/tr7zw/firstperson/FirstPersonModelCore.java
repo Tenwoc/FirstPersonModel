@@ -19,7 +19,6 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
     private LogicHandler logicHandler;
     public static FirstPersonModelCore instance;
     private boolean isHeld = false;
-    private KeyMapping keyBinding = GeneralUtil.createKeyMapping("key.firstperson.toggle", 295, "firstperson:keybind");
     private boolean lateInit = true;
     @Deprecated
     public static boolean enabled = true;
@@ -39,7 +38,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
 
         super.loadConfig();
 
-        ModLoaderUtil.registerKeybind(keyBinding);
+        KeybindHolder.INSTANCE.registerKeybinds();
         ModLoaderEventUtil.registerClientTickStartListener(this::onTick);
         ModLoaderUtil.disableDisplayTest();
         ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
@@ -85,7 +84,7 @@ public abstract class FirstPersonModelCore extends FirstPersonBase {
             lateInit = false;
             lateInit();
         }
-        if (keyBinding.isDown()) {
+        if (KeybindHolder.INSTANCE.getKeyBinding().isDown()) {
             if (isHeld) {
                 return;
             }
